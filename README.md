@@ -1,19 +1,26 @@
 # 微信 AI 记忆 Bot
 
-一个基于 vendored ILinkAI Weixin Python SDK 的微信 AI 助手。项目通过微信长轮询监听消息，调用 OpenAI Chat Completions 兼容接口生成回复，并使用 SQLite 为私聊/群聊维护独立上下文记忆。
+一个基于 vendored ILinkAI Weixin Python SDK 的微信 AI 助手。项目通过 ClawBot / ILinkAI Weixin 能力进行微信扫码登录、长轮询收消息和发送回复，调用 OpenAI Chat Completions 兼容接口生成内容，并使用 SQLite 为当前可对话的会话维护上下文记忆。
 
 ## 主要特性
 
-- 微信扫码登录、消息监听、文本/图片回复。
+- 通过 ClawBot / ILinkAI Weixin SDK 完成微信扫码登录、消息监听、文本/图片回复。
 - OpenAI 兼容接口，支持非流式与流式响应。
 - 多模型配置与微信内命令切换、添加、修改、删除模型。
-- 私聊/群聊按会话隔离记忆，支持手动清理上下文。
+- 按 ClawBot 消息上下文维护记忆，支持手动清理当前会话上下文。
 - SQLite 保存聊天记录、图片记录和长期摘要。
 - 支持自动总结旧消息，压缩长期上下文并自动备份数据库。
 - 支持微信图片识别：用户发图后转为 vision data URL 发给 AI。
 - 支持 AI 图片发送：自动下载 AI 返回的图片 URL 并通过微信发送。
 - 配置热重载、日志输出、运行数据自动清理。
 - 兼容 Python 3.6.8 / CentOS 7，尽量仅使用标准库。
+
+## 当前限制
+
+- 当前项目只支持通过 ClawBot / ILinkAI Weixin 提供的能力进行扫码登录、收消息和回复消息。
+- 当前实现不支持微信群聊完整适配；请优先按私聊/ClawBot 可投递的会话场景使用。
+- 微信侧可接收和可回复的范围取决于 ClawBot / ILinkAI Weixin SDK 当前支持的能力与账号状态。
+
 
 ## 项目结构
 
@@ -239,7 +246,7 @@ Bot 会携带 `Authorization: Bearer <api_key>` 下载图片，保存到 `reply.
 
 ## 记忆与摘要
 
-- 会话 ID 由微信账号和聊天对象组成，私聊与群聊相互隔离。
+- 会话 ID 由微信账号和 ClawBot 消息上下文中的聊天对象组成。
 - 普通对话会保存 user/assistant 消息。
 - 图片上下文会保存用户图片和 AI 生成图片记录。
 - 当历史消息过多时，可自动或手动生成长期摘要，并压缩旧消息。
