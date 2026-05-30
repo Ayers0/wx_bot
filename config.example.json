@@ -1,0 +1,109 @@
+{
+  "wechat": {
+    "account_id": "",
+    "auto_login": false,
+    "sdk_path": "vendor",
+    "media_dir": "data/media",
+    "media_max_age_seconds": 86400,
+    "media_max_files": 500,
+    "media_cleanup_interval_seconds": 3600
+  },
+  "ai": {
+    "provider": "openai-compatible",
+    "active_model": "default",
+    "stream": false,
+    "timeout_seconds": 120,
+    "max_tokens": 1024,
+    "temperature": 0.7,
+    "system_prompt": "你是一个有帮助的微信 AI 助手。请根据上下文自然回复，必要时说明不确定性。",
+    "ignore_reasoning_content": true,
+    "supports_vision": false,
+    "models": {
+      "default": {
+        "provider": "openai-compatible",
+        "chat_completions_url": "https://api.example.com/v1/chat/completions",
+        "api_key": "",
+        "api_key_env": "OPENAI_COMPAT_API_KEY",
+        "model": "your-model-name",
+        "supports_vision": false
+      }
+    }
+  },
+  "memory": {
+    "database_path": "data/memory.sqlite3",
+    "max_history_messages": 20,
+    "save_user_messages": true,
+    "save_assistant_messages": true,
+    "image_context_enabled": true,
+    "image_context_max_images": 3,
+    "image_context_max_age_seconds": 86400,
+    "image_context_include_user_images": true,
+    "image_context_include_ai_images": true,
+    "auto_summary_enabled": true,
+    "summary_trigger_messages": 40,
+    "summary_keep_recent_messages": 12,
+    "summary_max_chars": 3000,
+    "summary_backup_enabled": true,
+    "summary_backup_dir": "data/memory_backups",
+    "summary_backup_max_files": 20,
+    "summary_backup_max_age_seconds": 604800,
+    "summary_prompt": ""
+  },
+  "reply": {
+    "ignore_empty_text": true,
+    "clear_commands": [
+      "/clear",
+      "/清理",
+      "清空记忆"
+    ],
+    "menu_commands": [
+      "/菜单"
+    ],
+    "model_commands": [
+      "/model",
+      "/模型"
+    ],
+    "add_model_commands": [
+      "/add model",
+      "/添加模型"
+    ],
+    "list_model_commands": [
+      "/模型列表",
+      "/list models"
+    ],
+    "update_model_commands": [
+      "/修改模型",
+      "/update model"
+    ],
+    "delete_model_commands": [
+      "/删除模型",
+      "/delete model"
+    ],
+    "stream_send_to_wechat": false,
+    "stream_chunk_chars": 120,
+    "stream_chunk_interval_seconds": 1.5,
+    "send_typing": true,
+    "recognize_images": true,
+    "image_recognition_prompt": "请识别这张图片，并简要说明图片内容。",
+    "send_ai_images": true,
+    "generated_image_dir": "data/generated_images",
+    "generated_image_max_age_seconds": 86400,
+    "generated_image_max_files": 200,
+    "generated_image_cleanup_interval_seconds": 3600,
+    "image_caption": ""
+  },
+  "hot_reload": {
+    "enabled": true,
+    "watch_files": [
+      "config.json"
+    ],
+    "poll_interval_seconds": 2,
+    "reload_ai": true,
+    "reload_memory": false,
+    "reload_wechat": false
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "data/bot.log"
+  }
+}

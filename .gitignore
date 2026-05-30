@@ -1,0 +1,15 @@
+config.json
+data/
+*.key
+*.pem
+*.env
+.env
+.env.*
+!.env.example
+*.sqlite3
+*.db
+*.log
+bot.out
+
+*.pyc
+__pycache__/
