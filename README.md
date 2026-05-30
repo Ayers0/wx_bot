@@ -145,38 +145,6 @@ nohup python3 main.py --config config.json > bot.out 2>&1 &
 
 > 安全建议：微信里添加模型时如果必须输入 `api_key`，该消息本身可能被聊天记录、日志或截图保存。更推荐先在服务器设置环境变量，再通过 `api_key_env=环境变量名` 引用。
 
-## 明文默认项与服务器配置检查
-
-本项目已尽量移除模板中的真实服务地址、模型名和密钥。当前仍需要关注以下内容：
-
-- `config.json`：本地运行配置，可能包含真实 `chat_completions_url`、`api_key`、`account_id` 等敏感信息，已被 `.gitignore` 忽略。
-- `~/.ilinkai`：微信扫码登录后的 token 存储目录，不在项目内，但部署和备份时需要保护。
-- `data/`：包含 SQLite 记忆库、日志、收发图片和数据库备份，可能含聊天内容或图片，已被 `.gitignore` 忽略。
-- `.env.example`：环境变量示例文件，只能放占位符；真实 `.env`、`.env.*` 已被忽略。
-- `config.example.json`：只保留 `https://api.example.com/v1/chat/completions`、`your-model-name`、`OPENAI_COMPAT_API_KEY` 等占位符。
-- 文档和菜单示例：统一使用 `api.example.com`、`your-model`、`sk-xxx` 等占位符，不应出现真实服务器地址或真实 Key。
-- 代码默认值：`bot_core/config/manager.py` 会拒绝明显占位符配置，避免复制模板后误启动。
-
-建议在服务器上用环境变量保存密钥，例如：
-
-```bash
-export OPENAI_COMPAT_API_KEY="sk-..."
-python3 main.py --config config.json
-```
-
-systemd 可使用 `Environment=` 或 `EnvironmentFile=` 注入环境变量。
-
-运行前可检查项目内是否仍有疑似明文：
-
-```powershell
-Get-ChildItem -Recurse -File -Include *.py,*.json,*.md,*.env.example |
-  Select-String -Pattern 'sk-[A-Za-z0-9_-]{12,}|xqz0|8222|api\.deepseek\.com|真实密钥' -CaseSensitive:$false
-```
-
-如果命中 `config.json` 且里面是真实密钥，请确认它没有被提交；如果命中文档或模板中的真实服务器地址，应改成占位符。
-
-
-
 ## 核心配置说明
 
 ### wechat
